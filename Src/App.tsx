@@ -8,12 +8,11 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 80, fontWeight: 'bold', height : 600, alignItems : 'center', justifyContent: 'center' }}>Welcome To Expenzes!</Text>
-      <Text style={{ fontSize: 25, height: 100 }}>Swipe to the left to continue!</Text>
-      <StatusBar style="auto" />
-      <Link href="/about">About</Link>
+      <button style={styles.button} onPress={() => {}}>GO!</button>
+      <Text style={{ fontSize: 25, height: 100 }}>Tap GO! to get started</Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -22,5 +21,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#63d963',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  button: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#007bff',
+    borderRadius: 5,
   },
 });
