@@ -8,8 +8,12 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 80, fontWeight: 'bold', height : 600, alignItems : 'center', justifyContent: 'center' }}>Welcome To Expenzes!</Text>
-      <button style={styles.button} onPress={() => {}}>GO!</button>
-      <Text style={{ fontSize: 25, height: 100 }}>Tap GO! to get started</Text>
+      <Button 
+        title="GO!"
+        color="#841584" 
+        onPress={() => {}} 
+        />
+      <Text style={{ fontSize: 25, height: 100 }}>Tap the button to get started</Text>
     </View>
   );
 };
