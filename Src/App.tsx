@@ -7,12 +7,7 @@ import { supabase } from './utils/supabase';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 80, fontWeight: 'bold', height : 600, alignItems : 'center', justifyContent: 'center' }}>Welcome To Expenzes!</Text>
-      <Button 
-        title="GO!"
-        color="#841584" 
-        onPress={() => {}} 
-        />
+      <Text style={styles.title}>Welcome To Expenzes!</Text>
       <Text style={{ fontSize: 25, height: 100 }}>Tap the button to get started</Text>
     </View>
   );
@@ -31,5 +26,12 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#007bff',
     borderRadius: 5,
+  },
+  title: {
+    fontSize: 80,
+    fontWeight: 'bold',
+    height: 600,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
