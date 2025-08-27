@@ -1,5 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
-import { Link, Router } from 'expo-router';
+import { Link } from 'expo-router';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList, Button } from 'react-native';
 import { supabase } from '../utils/supabase';
