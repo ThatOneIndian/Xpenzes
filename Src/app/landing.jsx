@@ -1,19 +1,19 @@
-import { Link } from 'expo-router';
+import { Link } from "expo-router";
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList, Button } from 'react-native';
 import { supabase } from '../utils/supabase';
 
-export default function App() {
+export default function landing() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome To Expenzes!</Text>
-      <Link href="/index">
+      <Link href="/">
         <View style={styles.card}>
           <Text style={styles.cardText}>Go!</Text>
         </View>
       </Link>
       <Text style={{ fontSize: 25, height: 100 }}>Tap the button to get started</Text>
-      <Link href='/index'> <Text>Go to Home</Text> </Link>
+      <Link href='/'>Go to Home</Link>
     </View>
   );
 };
@@ -41,13 +41,13 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: '#4cfd6fff',
-    padding: 20,
-    borderRadius: 5,
-    marginVertical: 5,
+    padding: 25,
+    borderRadius: 3,
+    marginVertical: 3,
     boxShadow: '4px 4px rgba(0, 0, 0, 0.1)',
   },
   cardText: {
-    fontSize: 25,
+    fontSize: 22,
     fontWeight: 'bold',
   },
 });
