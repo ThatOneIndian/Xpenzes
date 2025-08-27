@@ -13,6 +13,7 @@ export default function App() {
         </View>
       </Link>
       <Text style={{ fontSize: 25, height: 100 }}>Tap the button to get started</Text>
+      <Link href='/index'> <Text>Go to Home</Text> </Link>
     </View>
   );
 };
