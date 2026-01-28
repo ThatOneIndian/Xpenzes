@@ -1,19 +1,9 @@
-import { Link } from "expo-router";
-import { StyleSheet, Text, View, Image } from "react-native";
-import { supabase } from '../../utils/supabase';
+import { Text, View } from 'react-native';
 
-
-const Home = () => {
-    return (
-        <View>
-            <Text>Welcome to the Home Screen</Text>
-            <Link href='/landing'>Go to Landing</Link>
-        </View>
-    )
+export default function Index() {
+  return (
+    <View>
+      <Text>Home screen</Text>
+    </View>
+  );
 }
-
-export default Home;
-
-const style = StyleSheet.create({
-    
-})
