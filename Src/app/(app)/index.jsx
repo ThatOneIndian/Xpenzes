@@ -1,6 +1,6 @@
 import { Link } from "expo-router";
 import { StyleSheet, Text, View, Image } from "react-native";
-import { supabase } from '../utils/supabase';
+import { supabase } from '../../utils/supabase';
 
 
 const Home = () => {
