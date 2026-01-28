@@ -3,17 +3,20 @@ import React from "react"
 import { StatusBar } from "expo-status-bar"
 import { Header } from "react-native/Libraries/NewAppScreen"
 
+const isLoggedIn = false;
+
 export default function RootLayout() {
     return (
         <React.Fragment>
             <StatusBar style="auto" />
             <Stack>
 
-                <Stack.Protected guard={false}>
+                <Stack.Protected guard={isLoggedIn}>
                     <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
                 </Stack.Protected>
 
-                <Stack.Protected guard={true}>
+                <Stack.Protected guard={!isLoggedIn}>
+                    <Stack.Screen name="create-account" />
                     <Stack.Screen name="sign-in" />
                 </Stack.Protected>
 
