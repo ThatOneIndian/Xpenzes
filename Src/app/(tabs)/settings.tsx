@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Button } from "react-native"
+import { View, Text, Button } from "react-native"
 import { useAuthStore } from "../../utils/authStore";
 
 export default function SettingsScreen() {
