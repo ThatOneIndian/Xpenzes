@@ -4,6 +4,9 @@ export default function Index() {
   return (
     <View>
       <Text>Home screen</Text>
+      <Link asChild push href="/modal">
+        <Button title="Open modal" />
+      </Link>
     </View>
   );
 }
