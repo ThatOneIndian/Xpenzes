@@ -2,7 +2,7 @@ import { Stack } from "expo-router"
 import React from "react"
 import { StatusBar } from "expo-status-bar"
 import { Header } from "react-native/Libraries/NewAppScreen"
-import { useAuthStore } from "../utils/authStore";
+import { useAuthStore } from "./utils/authStore";
 
 export default function RootLayout() {
     const { isLoggedIn, shouldCreateAccount } = useAuthStore();
