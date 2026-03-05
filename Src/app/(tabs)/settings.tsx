@@ -2,12 +2,12 @@ import { View, Text, Button } from "react-native"
 import { useAuthStore } from "../../utils/authStore";
 
 export default function SettingsScreen() {
-    const { logOut } = useAuthStore();
+    const { signOut } = useAuthStore();
     return (
         <View>
             <Text>Settings Screen</Text>
 
-            <Button title="Sign out" onPress={logOut} />
+            <Button title="Sign out" onPress={signOut} />
         </View>
     );
 }

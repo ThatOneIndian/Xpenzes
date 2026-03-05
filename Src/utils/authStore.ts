@@ -1,43 +1,22 @@
-import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware"
-import { getItem, setItem, deleteItemAsync } from "expo-secure-store"
+import { create } from 'zustand';
+import { Session } from '@supabase/supabase-js';
+import { supabase } from './supabase';
 
-type UserState = {
-    isLoggedIn: boolean;
-    shouldCreateAccount: boolean;
-    logIn: () => void;
-    logOut: () => void;
+interface AuthState {
+  session: Session | null;
+  isInitialized: boolean;
+  setSession: (session: Session | null) => void;
+  signOut: () => Promise<void>;
+}
 
-};
-
-export const useAuthStore = create(
-    persist<UserState>((set) => ({
-    isLoggedIn: false,
-    shouldCreateAccount: false,
-    logIn: () => {
-        set((state) => {
-            return {
-                ...state,
-                isLoggedIn: true,
-            };
-        });
-    },
-    logOut: () => {
-        set((state) => {
-            return {
-                ...state,
-                isLoggedIn: false,
-            };
-        });
-    },
-    }), 
-    {
-        name: "auth-store",
-        storage: createJSONStorage(() => ({
-            setItem,
-            getItem,
-            removeItem: deleteItemAsync
-        }))
-    },
-    ),
-);
+export const useAuthStore = create<AuthState>((set) => ({
+  session: null,
+  isInitialized: false,
+  
+  setSession: (session) => set({ session, isInitialized: true }),
+  
+  signOut: async () => {
+    await supabase.auth.signOut();
+    set({ session: null });
+  },
+}));
