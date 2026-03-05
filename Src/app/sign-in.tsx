@@ -9,10 +9,6 @@ export default function SignInScreen() {
       
       {/* 2. Render the Google auth button here */}
       <GoogleSignIn />
-
-      <Link asChild push href="/modal">
-        <Button title="Open modal (disabled)" />
-      </Link>
     </View>
   );
 }
