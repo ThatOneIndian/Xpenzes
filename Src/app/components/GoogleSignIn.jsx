@@ -2,6 +2,7 @@ import { Button, StyleSheet } from "react-native";
 import { supabase } from "../../utils/supabase";
 import * as WebBrowser from "expo-web-browser";
 import { makeRedirectUri } from "expo-auth-session";
+import { createSessionFromUrl } from "../../utils/supabase";
 
 // 1. Handle the browser session
 WebBrowser.maybeCompleteAuthSession();
@@ -36,6 +37,9 @@ export default function GoogleSignIn() {
       
       // Note: Supabase session is handled automatically by the URL event listener
       // setup in your utils/supabase.js (if you used the persistent setup)
+      if (result.type === 'success' && result.url) {
+        await createSessionFromUrl(result.url);
+      }
     }
   };
 
