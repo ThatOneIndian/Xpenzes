@@ -1,5 +1,5 @@
 import { Button, StyleSheet } from "react-native";
-import { supabase } from "../utils/supabase";
+import { supabase } from "../../utils/supabase";
 import * as WebBrowser from "expo-web-browser";
 import { makeRedirectUri } from "expo-auth-session";
 
