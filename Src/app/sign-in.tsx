@@ -1,19 +1,31 @@
 import { Link } from "expo-router";
-import { Button } from "react-native";
-import { View, Text, StyleSheet } from "react-native"
-import { useAuthStore } from '../utils/authStore';
+import { View, Text, Button, StyleSheet } from "react-native";
+import GoogleSignIn from "./components/GoogleSignIn"; 
 
 export default function SignInScreen() {
-  const { logIn } = useAuthStore();
   return (
-    <View>
-      <Text>
-        Sign In Screen
-      </Text>
-      <Button title="Sign in" onPress={logIn} />
+    <View style={styles.container}>
+      <Text style={styles.title}>Welcome to Xpenzes</Text>
+      
+      {/* 2. Render the Google auth button here */}
+      <GoogleSignIn />
+
       <Link asChild push href="/modal">
         <Button title="Open modal (disabled)" />
       </Link>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+  }
+});
