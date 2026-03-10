@@ -5,6 +5,7 @@ import { supabase } from './supabase';
 interface AuthState {
   session: Session | null;
   isInitialized: boolean;
+  hasProfile: boolean | null;
   setSession: (session: Session | null) => void;
   signOut: () => Promise<void>;
 }
@@ -12,11 +13,27 @@ interface AuthState {
 export const useAuthStore = create<AuthState>((set) => ({
   session: null,
   isInitialized: false,
+  hasProfile: null,
   
-  setSession: (session) => set({ session, isInitialized: true }),
+  setSession: async (session) => {
+    set({session}); 
+
+    if (session) {
+      const { data } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('id', session.user.id)
+        .single();
+
+      set({ hasProfile: !!data, isInitialized: true});
+    } else {
+      set({ hasProfile: false, isInitialized: true});
+    }
   
+  },
+
   signOut: async () => {
     await supabase.auth.signOut();
-    set({ session: null });
+    set({ session: null, hasProfile: false });
   },
 }));
