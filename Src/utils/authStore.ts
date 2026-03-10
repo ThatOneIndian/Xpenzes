@@ -6,7 +6,8 @@ interface AuthState {
   session: Session | null;
   isInitialized: boolean;
   hasProfile: boolean | null;
-  setSession: (session: Session | null) => void;
+  setSession: (session: Session | null) => Promise<void>;
+  setHasProfile: (status: boolean) => void;
   signOut: () => Promise<void>;
 }
 
@@ -15,6 +16,8 @@ export const useAuthStore = create<AuthState>((set) => ({
   isInitialized: false,
   hasProfile: null,
   
+  setHasProfile: (status) => set({ hasProfile: status }),
+
   setSession: async (session) => {
     set({session}); 
 

@@ -5,7 +5,8 @@ import { useAuthStore } from "../utils/authStore";
 import { supabase } from "../utils/supabase";
 
 export default function RootLayout() {
-  const { session, isInitialized, setSession } = useAuthStore();
+  // FIX: Added hasProfile here so the useEffect can see it!
+  const { session, isInitialized, hasProfile, setSession } = useAuthStore();
   const segments = useSegments();
   const router = useRouter();
 
@@ -24,19 +25,23 @@ export default function RootLayout() {
 
   // 2. Handle routing based on auth state
   useEffect(() => {
-    if (!isInitialized) return;
+    // Wait until we know both the session AND profile status
+    if (!isInitialized || hasProfile === null) return;
 
-    // Check if the user is in the (tabs) group
     const inAuthGroup = segments[0] === '(tabs)';
+    const inCreateAccount = segments[0] === 'create-account';
 
-    if (session && !inAuthGroup) {
-      // Logged in but not in tabs? Send them to the home screen.
+    if (session && hasProfile && !inAuthGroup) {
+      // Logged in AND has a profile? Send to Home.
       router.replace('/(tabs)');
-    } else if (!session && inAuthGroup) {
-      // Not logged in but trying to access tabs? Send them to sign in.
+    } else if (session && !hasProfile && !inCreateAccount) {
+      // Logged in but NO profile? Send to Create Account.
+      router.replace('/create-account');
+    } else if (!session && (inAuthGroup || inCreateAccount)) {
+      // Not logged in? Send to Sign In.
       router.replace('/sign-in');
     }
-  }, [session, isInitialized, segments]);
+  }, [session, isInitialized, hasProfile, segments]);
 
   return (
     <React.Fragment>
