@@ -45,8 +45,7 @@ export default function RootLayout() {
         {/* We just list the screens here, the useEffect handles the protection! */}
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="sign-in" options={{ headerShown: false }} />
-        <Stack.Screen name="create-account" options={{ presentation: 'modal' }} />
-        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+        <Stack.Screen name="create-account"  />
       </Stack>
     </React.Fragment>
   );
