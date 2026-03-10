@@ -33,7 +33,7 @@ export default function RootLayout() {
 
     if (session && hasProfile && !inAuthGroup) {
       // Logged in AND has a profile? Send to Home.
-      router.replace('/(tabs)');
+      router.replace('/Home');
     } else if (session && !hasProfile && !inCreateAccount) {
       // Logged in but NO profile? Send to Create Account.
       router.replace('/create-account');
