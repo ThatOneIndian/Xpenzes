@@ -1,4 +1,3 @@
-import { Link } from "expo-router";
 import { View, Text, Button, StyleSheet } from "react-native";
 import GoogleSignIn from "./components/GoogleSignIn"; 
 
