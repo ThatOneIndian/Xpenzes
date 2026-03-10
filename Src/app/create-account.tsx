@@ -6,33 +6,57 @@ import { useAuthStore } from '../utils/authStore';
 export default function CreateAccountScreen() {
   const { session, setHasProfile } = useAuthStore();
 
-  // 1. Extract Google data from the session metadata
   const googleName = session?.user?.user_metadata?.full_name || '';
   const googleAvatar = session?.user?.user_metadata?.avatar_url || '';
 
-  // 2. Initialize state. Full Name gets pre-filled!
   const [username, setUsername] = useState('');
   const [fullName, setFullName] = useState(googleName);
+  
+  // NEW: State to hold our error message
+  const [errorMessage, setErrorMessage] = useState(''); 
 
   const handleCreateProfile = async () => {
     if (!session?.user) return;
+    
+    // Clear any previous errors
+    setErrorMessage('');
 
-    // 3. Insert into the profiles table, including the Google Avatar URL
-    const { error } = await supabase
+    // 1. Check if the username is empty
+    if (!username.trim()) {
+      setErrorMessage("Please enter a username.");
+      return;
+    }
+
+    // 2. Query the database to see if the username already exists
+    const { data: existingUser, error: searchError } = await supabase
+      .from('profiles')
+      .select('username')
+      .eq('username', username.trim())
+      .single();
+
+    // If 'existingUser' comes back with data, the username is taken!
+    if (existingUser) {
+      setErrorMessage("This username has already been taken.");
+      return;
+    }
+
+    // 3. If the username is free, proceed with the insert
+    const { error: insertError } = await supabase
       .from('profiles')
       .insert([
         {
           id: session.user.id, 
-          username: username,
+          username: username.trim().toLowerCase(), // Good practice to force lowercase usernames
           full_name: fullName,
-          profile_pic_url: googleAvatar, // Saves the image link to your database
+          profile_pic_url: googleAvatar, 
         }
       ]);
 
-    if (error) {
-      console.error("Error creating profile:", error);
+    if (insertError) {
+      console.error("Error creating profile:", insertError);
+      setErrorMessage("Something went wrong saving your profile.");
     } else {
-      setHasProfile(true); // Triggers the router to move to /(tabs)
+      setHasProfile(true); 
     }
   };
 
@@ -40,7 +64,6 @@ export default function CreateAccountScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>Complete Your Profile</Text>
 
-      {/* 4. Display their Google Profile Picture if it exists */}
       {googleAvatar ? (
         <Image source={{ uri: googleAvatar }} style={styles.avatar} />
       ) : null}
@@ -59,6 +82,11 @@ export default function CreateAccountScreen() {
         value={fullName}
         onChangeText={setFullName}
       />
+
+      {/* NEW: Display the error message in red if it exists */}
+      {errorMessage ? (
+        <Text style={styles.errorText}>{errorMessage}</Text>
+      ) : null}
       
       <Button title="Save Profile" onPress={handleCreateProfile} />
     </View>
@@ -69,7 +97,7 @@ const styles = StyleSheet.create({
   container: { 
     flex: 1, 
     justifyContent: 'center', 
-    alignItems: 'center', // Centers the avatar and text
+    alignItems: 'center', 
     padding: 20 
   },
   title: { 
@@ -89,6 +117,11 @@ const styles = StyleSheet.create({
     padding: 10, 
     marginBottom: 15, 
     borderRadius: 5,
-    width: '100%' // Ensures inputs stretch across the screen
+    width: '100%' 
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 15,
+    textAlign: 'center'
   }
 });
