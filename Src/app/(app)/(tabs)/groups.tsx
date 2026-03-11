@@ -1,12 +1,11 @@
 import { useRouter } from "expo-router";
-import { View, Text, Button} from "react-native"
+import { View, Text, Button,StyleSheet} from "react-native"
 
 export default function groups() {
   const router = useRouter();
 
-  const goToCreateGroup = () => {router.navigate('../create-group.tsx')}
+  const goToCreateGroup = () => {router.navigate('/create-group')};
 
-  
   return (
     <View>
       <Text>Groups screen</Text>
@@ -14,3 +13,7 @@ export default function groups() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+
+});
