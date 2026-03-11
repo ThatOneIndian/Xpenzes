@@ -11,7 +11,7 @@ export default function AppLayout() {
         name="create-group" 
         options={{ 
           title: 'Create Group',
-          presentation: 'modal' // Optional: Makes it slide up from the bottom!
+          presentation: 'modal' // makes it slide up from the bottom
         }} 
       />
     </Stack>
