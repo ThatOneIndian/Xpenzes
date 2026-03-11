@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Image } from 'react-native';
-import { supabase } from '../utils/supabase';
-import { useAuthStore } from '../utils/authStore';
+import { supabase } from '../../utils/supabase';
+import { useAuthStore } from '../../utils/authStore';
 
 export default function CreateAccountScreen() {
   const { session, setHasProfile } = useAuthStore();

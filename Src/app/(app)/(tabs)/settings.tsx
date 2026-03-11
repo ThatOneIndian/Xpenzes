@@ -1,5 +1,5 @@
 import { View, Text, Button } from "react-native"
-import { useAuthStore } from "../../utils/authStore";
+import { useAuthStore } from "../../../utils/authStore";
 
 export default function SettingsScreen() {
     const { signOut } = useAuthStore();

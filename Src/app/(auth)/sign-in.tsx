@@ -1,5 +1,5 @@
 import { View, Text, Button, StyleSheet } from "react-native";
-import GoogleSignIn from "./components/GoogleSignIn"; 
+import GoogleSignIn from "./GoogleSignIn";
 
 export default function SignInScreen() {
   return (
