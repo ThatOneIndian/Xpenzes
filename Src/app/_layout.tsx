@@ -5,12 +5,11 @@ import { useAuthStore } from "../utils/authStore";
 import { supabase } from "../utils/supabase";
 
 export default function RootLayout() {
-  // FIX: Added hasProfile here so the useEffect can see it!
   const { session, isInitialized, hasProfile, setSession } = useAuthStore();
   const segments = useSegments();
   const router = useRouter();
 
-  // 1. Listen for Supabase auth changes
+  // 1. Listen for Supabase auth changes (No changes needed here!)
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -23,34 +22,39 @@ export default function RootLayout() {
     return () => subscription.unsubscribe();
   }, []);
 
-  // 2. Handle routing based on auth state
+  // 2. Handle routing based on auth and profile state
   useEffect(() => {
-    // Wait until we know both the session AND profile status
     if (!isInitialized || hasProfile === null) return;
 
-    const inAuthGroup = segments[0] === '(tabs)';
-    const inCreateAccount = segments[0] === 'create-account';
-
-    if (session && hasProfile && !inAuthGroup) {
-      // Logged in AND has a profile? Send to Home.
-      router.replace('/Home');
-    } else if (session && !hasProfile && !inCreateAccount) {
-      // Logged in but NO profile? Send to Create Account.
-      router.replace('/create-account');
-    } else if (!session && (inAuthGroup || inCreateAccount)) {
-      // Not logged in? Send to Sign In.
-      router.replace('/sign-in');
+    // Check which top-level route group we are currently in
+    const inAppGroup = segments[0] === '(app)';
+    const inAuthGroup = segments[0] === '(auth)';
+    
+    // Check if we are specifically on the create-account screen
+    // Check if 'create-account' exists anywhere in the current path
+    const isOnCreateAccount = segments.includes('create-account');
+    if (!session && inAppGroup) {
+      // 1. NOT logged in, but trying to access the app -> Send to Sign In
+      router.replace('/(auth)/sign-in');
+      
+    } else if (session && !hasProfile && (!inAuthGroup || !isOnCreateAccount)) {
+      // 2. LOGGED IN, but NO PROFILE, and not currently on the creation screen -> Send to Create Account
+      router.replace('/(auth)/create-account');
+      
+    } else if (session && hasProfile && !inAppGroup) {
+      // 3. LOGGED IN AND HAS PROFILE, but stuck in the auth screens -> Send to Home
+      router.replace('/(app)/(tabs)/Home');
     }
+    
   }, [session, isInitialized, hasProfile, segments]);
 
   return (
     <React.Fragment>
       <StatusBar style="auto" />
-      <Stack>
-        {/* We just list the screens here, the useEffect handles the protection! */}
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="sign-in" options={{ headerShown: false }} />
-        <Stack.Screen name="create-account"  />
+      <Stack screenOptions={{ headerShown: false }}>
+        {/* We map the Route Groups here instead of individual files */}
+        <Stack.Screen name="(app)" />
+        <Stack.Screen name="(auth)" />
       </Stack>
     </React.Fragment>
   );
