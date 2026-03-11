@@ -4,7 +4,7 @@ import { View, Text, Button,StyleSheet} from "react-native"
 export default function groups() {
   const router = useRouter();
 
-  const goToCreateGroup = () => {router.navigate('/create-group')};
+  const goToCreateGroup = () => { router.push('/create-group') };
 
   return (
     <View>
