@@ -1,7 +1,7 @@
 import { useRouter } from "expo-router";
 import { View, Text, Button,StyleSheet} from "react-native"
 
-export default function groups() {
+export default function Groups() {
   const router = useRouter();
   const goToCreateGroup = () => { router.push('create-group') };
 
@@ -13,11 +13,15 @@ export default function groups() {
   return (
     <View>
       <Text>Groups screen</Text>
-      <Button title="Create Group" onPress={goToCreateGroup} />
+      <View style={styles.CreateGroupButton}>
+        <Button title="Create Group" onPress={goToCreateGroup} />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-
+  CreateGroupButton: {
+    justifyContent: 'flex-end'
+  }
 });
