@@ -4,8 +4,8 @@ export default function TabsLayout() {
     return (
     <Tabs>
         <Tabs.Screen name="Home" />
-        <Tabs.Screen name="groups" />
-        <Tabs.Screen name="settings" />
+        <Tabs.Screen name="Groups" options={{ headerShown:false }}/>
+        <Tabs.Screen name="Settings" />
     </Tabs>
     );
 }
