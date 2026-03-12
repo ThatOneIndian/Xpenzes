@@ -14,6 +14,15 @@ export default function AppLayout() {
           presentation: 'modal' // makes it slide up from the bottom
         }} 
       />
+
+      <Stack.Screen 
+        name="AddFriend" 
+        options={{ 
+          title: 'Add Friend',
+          presentation: 'modal' // makes it slide up from the bottom
+        }} 
+      />
+
     </Stack>
   );
 }

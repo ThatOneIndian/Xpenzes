@@ -3,7 +3,7 @@ import { View, Text, Button,StyleSheet} from "react-native"
 
 export default function groups() {
   const router = useRouter();
-  const goToCreateGroup = () => { router.push('/create-group') };
+  const goToCreateGroup = () => { router.push('create-group') };
 
   const dummyGroups = [
     {id: '1', name:'group 1', amountOwed: 0, amountToPay: 100},
