@@ -41,9 +41,9 @@ export default function Groups() {
       <View style={styles.container}>
 
         <View style={styles.headerContainer}>
-          <Text>hi</Text>
+          <Text style={styles.headerTitle}>Groups</Text>
 
-          <TouchableOpacity style={styles.iconButton} onPress={goToCreateGroup}>
+          <TouchableOpacity onPress={goToCreateGroup}>
             <MaterialIcons name="group-add" size={28} color="black" />
           </TouchableOpacity>
         </View>
@@ -68,17 +68,24 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    justifyContent: "center",
+    alignContent: "center",
     flex: 1,
     paddingHorizontal:16,
   },
 
   headerContainer: {
     alignItems: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical:10,
+    marginBottom: 10,
+
   },
 
-  iconButton: {
-
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
   },
 
   FlatList: {
