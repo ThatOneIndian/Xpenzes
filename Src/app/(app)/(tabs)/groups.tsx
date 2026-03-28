@@ -1,8 +1,7 @@
 import { useRouter } from "expo-router";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context";
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-
+import AntDesign from "@expo/vector-icons/AntDesign";
 export default function Groups() {
   const router = useRouter();
   const goToCreateGroup = () => { router.push('create-group') };
@@ -44,7 +43,7 @@ export default function Groups() {
           <Text style={styles.headerTitle}>Groups</Text>
 
           <TouchableOpacity onPress={goToCreateGroup}>
-            <MaterialIcons name="group-add" size={28} color="black" />
+            <AntDesign name="usergroup-add" size={28} color="black" />
           </TouchableOpacity>
         </View>
 
