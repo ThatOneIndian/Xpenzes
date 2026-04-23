@@ -97,6 +97,7 @@ export default function Groups() {
               renderItem={renderGroupCard}
               keyExtractor={(item) => item.id}
               numColumns={2}
+              columnWrapperStyle={{ justifyContent: 'space-between' }}
               onRefresh={fetchGroups} // Pull-to-refresh!
               refreshing={isRefreshing}
             />
