@@ -43,7 +43,7 @@ export default function Groups() {
           <Text style={styles.headerTitle}>Groups</Text>
 
           <TouchableOpacity onPress={goToCreateGroup}>
-            <AntDesign name="usergroup-add" size={28} color="black" />
+            <AntDesign name="addusergroup" size={28} color="black" />
           </TouchableOpacity>
         </View>
 

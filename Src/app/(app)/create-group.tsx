@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { supabase } from '../../utils/supabase';
 import { useRouter } from 'expo-router';
@@ -9,11 +9,54 @@ export default function CreateGroup() {
     // State to hold the text the user types
     const [groupName, setGroupName] = useState('');
     const [description, setDescription] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const router = useRouter();
+    const { session } = useAuthStore();
 
     // This function will run when they press the Create button
-    const handleCreateGroup = () => {
-        console.log("Creating group:", groupName, description);
-        // Next step: We will send this data to Supabase here!
+    const handleCreateGroup = async () => {
+        if (!session?.user) return; // Safety check
+        setIsSubmitting(true);
+
+        // STEP 1: Insert the new group and return the newly created row
+        const { data: newGroup, error: groupError } = await supabase
+            .from('groups')
+            .insert([
+                { 
+                    name: groupName.trim(), 
+                    created_by: session.user.id // Matches your schema!
+                    // Note: 'description' is left out because it's not in your Supabase table yet!
+                }
+            ])
+            .select() // This tells Supabase to send the created row back to us
+            .single();
+
+        if (groupError) {
+            console.error("Error creating group:", groupError);
+            Alert.alert("Error", "Could not create group. Please try again.");
+            setIsSubmitting(false);
+            return;
+        }
+
+        // STEP 2: Add the creator as the first member of the group
+        const { error: memberError } = await supabase
+            .from('group_members')
+            .insert([
+                {
+                    group_id: newGroup.id, // The ID of the group we just made
+                    user_id: session.user.id,
+                }
+            ]);
+
+        if (memberError) {
+            console.error("Error adding member:", memberError);
+            Alert.alert("Warning", "Group created, but couldn't add you as a member.");
+        }
+
+        setIsSubmitting(false);
+
+        // STEP 3: Success! Send the user back to the Groups tab
+        router.back();
     };
 
     return(
