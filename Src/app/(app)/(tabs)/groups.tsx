@@ -68,11 +68,18 @@ export default function Groups() {
 
   const renderGroupCard = ({ item }: { item: Group }) => {
     return(
-      <View style={styles.card}>
+      //Add onPress to navigate to the dynamic route, passing the ID and Name
+      <TouchableOpacity 
+        style={styles.card}
+        onPress={() => router.push({
+          pathname: '/group/[id]',
+          params: { id: item.id, name: item.name }
+        })}
+      >
         <Text style={styles.groupName}>{item.name}</Text>
         <Text>Amount Owed: ${item.amountOwed}</Text>
         <Text>Amount To Pay: ${item.amountToPay}</Text>
-      </View>
+      </TouchableOpacity>
     );
   };
 

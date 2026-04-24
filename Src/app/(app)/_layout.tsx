@@ -15,6 +15,16 @@ export default function AppLayout() {
         }} 
       />
 
+      {/* 3. Register the dynamic group details screen */}
+      <Stack.Screen 
+        name="group/[id]" 
+        options={{ 
+          title: 'Group Details',
+          headerShown: true, // We want the default back button here!
+          headerBackTitle: 'Back' 
+        }} 
+      />
+
       <Stack.Screen 
         name="AddFriend" 
         options={{ 
